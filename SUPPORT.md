@@ -1,18 +1,20 @@
-# Support
+> 🌐 本文档由 [microsoft/PowerToys](https://github.com/microsoft/PowerToys) 翻译,英文原版见原项目。
 
-## How to use Microsoft PowerToys
+# 支持
 
-For more information about PowerToys overviews, how to use the utilities, and other tools and resources for [Windows development environments](https://learn.microsoft.com/windows/dev-environment/overview), visit [learn.microsoft.com][usingPowerToys-docs-link].
+## 如何使用 Microsoft PowerToys
 
-## How to file issues and get help  
+有关 PowerToys 功能概览、各实用工具的使用方法,以及面向 [Windows 开发环境](https://learn.microsoft.com/windows/dev-environment/overview)的其他工具与资源,请访问 [learn.microsoft.com][usingPowerToys-docs-link]。
 
-This project uses [GitHub Issues][gh-issue] to [track bugs][gh-bug] and [feature requests][gh-feature]. Please search the existing issues before filing new issues to avoid duplicates. For new issues, file your bug or feature request as a new issue.
+## 如何提交 issue 并获取帮助
 
-For help and questions about using this project, please visit our documentation and [Contributor's Guide][contributor] if you want to contribute to PowerToys.
+本项目使用 [GitHub Issues][gh-issue] 来[跟踪 bug][gh-bug] 和[功能请求][gh-feature]。提交新 issue 之前请先搜索已有 issue,避免重复。对于新问题,请以新 issue 的形式提交你的 bug 或功能请求。
 
-## Microsoft support policy
+如需关于使用本项目的帮助或有疑问,请查阅我们的文档;如果想为 PowerToys 做贡献,请参阅[贡献者指南][contributor]。
 
-Support for PowerToys is limited to the resources listed above.
+## Microsoft 支持政策
+
+对 PowerToys 的支持仅限于上面列出的资源。
 
 [gh-issue]: https://github.com/microsoft/PowerToys/issues/new/choose
 [gh-bug]: https://github.com/microsoft/PowerToys/issues/new?assignees=&labels=Issue-Bug&template=bug_report.md

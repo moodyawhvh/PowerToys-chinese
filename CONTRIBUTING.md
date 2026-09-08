@@ -1,72 +1,74 @@
-# PowerToys contributor's guide
+> 🌐 本文档由 [microsoft/PowerToys](https://github.com/microsoft/PowerToys) 翻译,英文原版见原项目。
 
-Below is our guidance for reporting issues, proposing new features, and submitting contributions via Pull Requests (PRs). Our philosophy is to understand the problem and scenarios first, which is why we follow this pattern before work starts.
+# PowerToys 贡献者指南
 
-1. There is an issue.
-2. There has been a conversation.
-3. There is agreement on the problem, the fit for PowerToys, and the solution to the problem (implementation).
+以下是关于报告问题、提出新功能以及通过拉取请求(PR)提交贡献的指引。我们的理念是先弄清楚问题和使用场景,因此在动手之前我们会遵循以下流程:
 
-## Filing an issue
+1. 先有一个 issue。
+2. 经过一番讨论。
+3. 就问题本身、是否符合 PowerToys 的定位以及解决方案(实现方式)达成共识。
 
-**Importance of Filing an Issue First**
+## 提交 issue
 
-Please follow this rule to help eliminate wasted effort and frustration, and to ensure an efficient and effective use of everyone's time:
+**先提交 issue 的重要性**
 
-> 👉 If you have a question, think you've discovered an issue, or would like to propose a new feature, please find/file an issue **BEFORE** starting work to fix/implement it.
+请遵守以下规则,以避免无谓的劳动和挫败感,确保每个人的时间都用在刀刃上:
 
-When requesting new features or enhancements, providing additional evidence, data, tweets, blog posts, or research is extremely helpful. This information gives context to the scenario that may otherwise be lost.
+> 👉 如果你有疑问、认为自己发现了问题,或者想提议一个新功能,请在开始修复/实现之前**先**查找/提交一个 issue。
 
-- Unsure whether it's an issue or feature request? File an issue.
-- Have a question that isn't answered in the docs, videos, etc.? File an issue.
-- Want to know if we're planning a particular feature? File an issue.
-- Got a great idea for a new utility or feature? File an issue/request/idea.
-- Don't understand how to do something? File an issue/Community Guidance Request.
-- Found an existing issue that describes yours? Great! Upvote and add additional commentary, info, or repro steps.
+在请求新功能或改进时,提供额外的证据、数据、推文、博客文章或研究资料非常有帮助。这些信息能为使用场景补充上下文,否则这些背景可能就会丢失。
 
-A quick search before filing an issue could be helpful. It's likely someone else has found the same problem, and they may even be working on or have already contributed a fix!
+- 不确定是问题还是功能请求?提交 issue。
+- 文档、视频等资料没能解答你的疑问?提交 issue。
+- 想知道我们是否计划做某个功能?提交 issue。
+- 对新工具有好点子?提交 issue/请求/想法。
+- 不知道怎么使用某个功能?提交 issue/社区指引请求。
+- 发现已有 issue 描述了你的问题?很好!请点赞并在该 issue 下补充评论、信息或复现步骤。
 
-### Indicating interest in issues
+提交 issue 之前先快速搜索一下会很有帮助。很可能别人已经遇到过同样的问题,甚至正在修复或已经提交了修复!
 
-To let the team know which issues are important, upvote by clicking the [+😊] button and the 👍 icon on the original issue post. Avoid comments like "+1" or "me too" as they clutter the discussion and make it harder to prioritize requests.
+### 表达对 issue 的关注
 
----
-
-## Contributing fixes or features
-
-Please comment on our [Would you like to contribute to PowerToys?](https://github.com/microsoft/PowerToys/issues/28769) thread to let us know you're interested in working on something before you start. This helps avoid multiple people unexpectedly working on the same thing and ensures everyone is clear on what should be done. It's less work for everyone to establish this up front.
-
-### Localization issues
-
-For localization issues, please file an issue to notify our internal localization team, as community PRs for localization aren't accepted. Localization is handled exclusively by the internal Microsoft team.
-
-### To spec or not to spec
-
-A key point is for everyone to understand the approach that will be taken. We want to be sure that any work done will be accepted. Larger-scope items will require a spec to outline the approach and allow for discussion. Specs help collaborators consider different solutions, describe feature behavior, and plan for errors. Achieving agreement in a spec before writing code often results in simpler code and less wasted effort.
-
-Once a team member has agreed with your approach, proceed to the "Development" section below. Team members are happy to help review specs and guide them to completion.
-
-### Help wanted
-
-Once the team has approved an issue/spec approach, development can proceed. If no developers are immediately available, the spec may be parked and labeled "Help Wanted," ready for a developer to get started. For development opportunities, visit [Issues labeled Help Wanted](https://github.com/microsoft/PowerToys/labels/Help%20Wanted).
+想让团队知道哪些 issue 重要,请点击原 issue 帖子上的 [+😊] 按钮和 👍 图标进行点赞。请避免发表 "+1" 或 "我也是" 之类的评论,它们只会刷屏,让需求更难排定优先级。
 
 ---
 
-## Development
+## 贡献修复或功能
 
-Follow the [development guidelines](https://github.com/microsoft/PowerToys/blob/main/doc/devdocs/readme.md).
+在动手之前,请先在我们的 [是否愿意为 PowerToys 做贡献?](https://github.com/microsoft/PowerToys/issues/28769) 讨论串下留言,让我们知道你打算做什么。这能避免多人不期而遇地做同一件事,并确保每个人都清楚应该做什么。事先把这件事说清楚,对所有人都是省事。
 
-### Naming features and functionality
+### 本地化问题
 
-Names should be descriptive and straightforward, clearly reflecting functionality and usefulness.
+对于本地化问题,请提交 issue 通知我们内部的本地化团队,因为社区提交的本地化 PR 不会被接受。本地化完全由 Microsoft 内部团队负责。
 
-### Becoming a collaborator on the PowerToys team
+### 写不写规格说明(spec)
 
-Be an active community member! Make helpful contributions by filing bugs, offering suggestions, developing fixes and features, conducting code reviews, and updating documentation.
+关键在于让每个人都理解将要采用的方案。我们要确保付出的努力最终会被接受。范围较大的工作需要一份规格说明来阐述方案并供讨论。规格说明有助于协作者权衡不同方案、描述功能行为并规划错误处理。在写代码之前先在规格说明上达成一致,通常会让代码更简洁、少走弯路。
 
-When the time comes, Microsoft will reach out to you about becoming a formal team member. Just make sure they have a way to contact you. 😊
+一旦团队成员认可了你的方案,就可以进入下方的"开发"环节。团队成员很乐意帮忙评审规格说明并推动其完善。
+
+### 求助(Help Wanted)
+
+团队批准了 issue/规格说明方案后,就可以开始开发。如果暂时没有开发人员接手,规格说明会被搁置并打上 "Help Wanted" 标签,等待开发者开工。想找开发机会,请访问 [标记为 Help Wanted 的 issue](https://github.com/microsoft/PowerToys/labels/Help%20Wanted)。
 
 ---
 
-## Thank you
+## 开发
 
-Thank you in advance for your contribution! We appreciate your help in making PowerToys a better tool for everyone.
+请遵循[开发指南](https://github.com/microsoft/PowerToys/blob/main/doc/devdocs/readme.md)。
+
+### 功能与特性的命名
+
+命名应当描述性强、直截了当,能清楚体现功能与用途。
+
+### 成为 PowerToys 团队的协作者
+
+做一名活跃的社区成员!通过提交 bug、提出建议、开发修复和新功能、参与代码评审以及完善文档来做出有益的贡献。
+
+时机成熟时,Microsoft 会主动联系你成为正式团队成员。只要确保他们有办法联系到你即可。😊
+
+---
+
+## 致谢
+
+预先感谢你的贡献!感谢你帮助 PowerToys 成为对所有人更好的工具。
