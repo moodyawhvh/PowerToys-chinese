@@ -1,21 +1,24 @@
-# Coding Guidance
+> 🌐 本文档由 [microsoft/PowerToys](https://github.com/microsoft/PowerToys) 翻译,英文原版见原项目。
 
-## Working With Strings
+# 编码指引
 
-In order to support localization **YOU SHOULD NOT** have hardcoded UI display strings in your code. Instead, use resource files to consume strings. 
+## 字符串处理
 
-### For CPP
-Use [`StringTable` resource][String Table] to store the strings and resource header file(`resource.h`) to store Id's linked to the UI display string. Add the strings with Id's referenced from the header file to the resource-definition script file. You can use [Visual Studio Resource Editor][VS Resource Editor] to create and manage resource files.
+为了支持本地化,**请不要**在代码中硬编码 UI 显示字符串。应改为使用资源文件来管理字符串。
+
+### C++ 方式
+
+使用 [`StringTable` 资源][String Table] 存储字符串,用资源头文件(`resource.h`)存放与 UI 显示字符串关联的 ID。在资源定义脚本文件中添加带 ID(从头文件引用)的字符串。可以用 [Visual Studio 资源编辑器][VS Resource Editor] 创建和管理资源文件。
 
 - `resource.h`:
 
-XXX must be a unique int in the list (mostly the int ID of the last string id plus one):
+XXX 必须是列表中唯一的整数(通常是最后一个字符串 ID 加一):
 
 ```cpp
 #define IDS_MODULE_DISPLAYNAME                    XXX
 ```
 
-- `StringTable` in resource-definition script file `validmodulename.rc`:
+- 资源定义脚本文件 `validmodulename.rc` 中的 `StringTable`:
 
 ```
 STRINGTABLE
@@ -24,15 +27,16 @@ BEGIN
 END
 ```
 
-- Use the `GET_RESOURCE_STRING(UINT resource_id)` method to consume strings in your code.
+- 在代码中使用 `GET_RESOURCE_STRING(UINT resource_id)` 方法获取字符串。
 ```cpp
 #include <common.h>
 
 std::wstring GET_RESOURCE_STRING(IDS_MODULE_DISPLAYNAME)
 ```
 
-### For C#
-Use [XML resource file(.resx)][Resx Files] to store the UI display strings and [`Resource Manager`][Resource Manager] to consume those strings in the code. You can use [Visual Studio][Resx Files VS] to create and manage XML resources files.
+### C# 方式
+
+使用 [XML 资源文件(.resx)][Resx Files] 存储 UI 显示字符串,并在代码中通过 [`Resource Manager`][Resource Manager] 获取这些字符串。可以用 [Visual Studio][Resx Files VS] 创建和管理 XML 资源文件。
 
 - `Resources.resx`
 
@@ -43,23 +47,24 @@ Use [XML resource file(.resx)][Resx Files] to store the UI display strings and [
   </data>
 ```
 
-- Use [`Resource Manager`][Resource Manager] to consume strings in code.
+- 在代码中使用 [`Resource Manager`][Resource Manager] 获取字符串。
 ```csharp
 System.Resources.ResourceManager manager = new System.Resources.ResourceManager(baseName, assembly);
 string validUIDisplayString = manager.GetString("ValidUIDisplayString", resourceCulture);
 ```
 
-In case of Visual Studio is used to create the resource file. Simply use the `Resources` class in auto-generated `Resources.Designer.cs` file to access the strings which encapsulate the [`Resource Manager`][Resource Manager] logic.
+如果使用 Visual Studio 创建资源文件,直接使用自动生成的 `Resources.Designer.cs` 文件中的 `Resources` 类即可,它封装了 [`Resource Manager`][Resource Manager] 的逻辑。
 
 ```csharp
 string validUIDisplayString = Resources.ValidUIDisplayString;
 ```
 
-## More On Coding Guidance
-Please review these brief docs below relating to our coding standards, etc.
+## 更多编码指引
 
-* [Coding Style](development/style.md)
-* [Code Organization](readme.md)
+请继续阅读以下与编码标准相关的简短文档:
+
+* [代码风格](development/style.md)
+* [代码组织](readme.md)
 
 
 [VS Resource Editor]: https://learn.microsoft.com/cpp/windows/resource-editors?view=vs-2019
