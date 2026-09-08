@@ -5,37 +5,32 @@ ms.topic:    overview
 title:       PowerToys DSC Overview
 ---
 
-# PowerToys DSC Overview
+> 🌐 本文档由 [microsoft/PowerToys](https://github.com/microsoft/PowerToys) 翻译,英文原版见原项目。
 
-## Synopsis
+# PowerToys DSC 概览
 
-PowerToys supports Desired State Configuration (DSC) v3 for declarative configuration management of PowerToys settings.
+## 简介
 
-## Description
+PowerToys 支持期望状态配置(DSC)v3,可对 PowerToys 设置进行声明式配置管理。
 
-PowerToys includes Microsoft Desired State Configuration (DSC) support
-through the `PowerToys.DSC.exe` command-line tool, enabling you to:
+## 描述
 
-- Declare and enforce desired configuration states for PowerToys
-  utilities.
-- Automate PowerToys configuration across multiple systems.
-- Integrate PowerToys configuration with WinGet and other DSC-compatible
-  tools.
-- Version control your PowerToys settings as code.
+PowerToys 通过 `PowerToys.DSC.exe` 命令行工具提供 Microsoft 期望状态配置(DSC)支持,使你能够:
 
-The PowerToys DSC implementation provides a **settings** resource that
-manages configuration for all PowerToys utilities (modules). Each utility
-can be configured independently, allowing granular control over your
-PowerToys environment.
+- 声明并强制执行 PowerToys 实用工具的期望配置状态。
+- 跨多台系统自动化 PowerToys 配置。
+- 将 PowerToys 配置与 WinGet 及其他兼容 DSC 的工具集成。
+- 将 PowerToys 设置作为代码纳入版本控制。
 
-## Usage methods
+PowerToys 的 DSC 实现提供了一个 **settings** 资源,用于管理所有 PowerToys 实用工具(模块)的配置。每个实用工具都可以独立配置,从而对 PowerToys 环境实现细粒度控制。
 
-PowerToys DSC can be used in three ways:
+## 使用方式
 
-### 1. Direct execution with PowerToys.DSC.exe
+PowerToys DSC 有三种使用方式:
 
-Execute DSC operations directly using the PowerToys.DSC.exe command-line
-tool:
+### 1. 直接运行 PowerToys.DSC.exe
+
+使用 PowerToys.DSC.exe 命令行工具直接执行 DSC 操作:
 
 ```powershell
 # Get current settings for a module
@@ -49,11 +44,11 @@ PowerToys.DSC.exe set --resource 'settings' --module Awake --input $input
 PowerToys.DSC.exe test --resource 'settings' --module Awake --input $input
 ```
 
-For detailed information, see [PowerToys.DSC.exe command reference][01].
+详细信息见 [PowerToys.DSC.exe 命令参考][01]。
 
-### 2. Microsoft Desired State Configuration (DSC)
+### 2. Microsoft 期望状态配置(DSC)
 
-Use PowerToys DSC resources in standard DSC configuration documents:
+在标准 DSC 配置文档中使用 PowerToys DSC 资源:
 
 ```yaml
 # powertoys-config.dsc.yaml
@@ -70,9 +65,9 @@ resources:
         version: 0.0.1
 ```
 
-### 3. WinGet Configuration
+### 3. WinGet 配置
 
-Integrate PowerToys configuration with WinGet package installation:
+将 PowerToys 配置与 WinGet 包安装集成:
 
 ```yaml
 # winget-powertoys.yaml
@@ -86,7 +81,7 @@ resources:
     properties:
       id: Microsoft.PowerToys
       source: winget
-  
+
   - name: Configure FancyZones
     type: Microsoft.PowerToys/FancyZonesSettings
     properties:
@@ -98,59 +93,57 @@ resources:
         version: 1.0
 ```
 
-## Available resources
+## 可用资源
 
-PowerToys DSC provides the following resource:
+PowerToys DSC 提供以下资源:
 
-| Resource   | Description                                          |
-| ---------- | ---------------------------------------------------- |
-| `settings` | Manages configuration for PowerToys utility modules. |
+| 资源       | 说明                                       |
+| ---------- | ------------------------------------------ |
+| `settings` | 管理 PowerToys 实用工具模块的配置。 |
 
-For detailed information about the settings resource, see [Settings
-Resource Reference][03].
+settings 资源的详细信息见 [Settings 资源参考][03]。
 
-## Available modules
+## 支持的模块
 
-The settings resource supports configuration for the following PowerToys
-utilities:
+settings 资源支持配置以下 PowerToys 实用工具:
 
-| Module                 | Description                                  | Documentation                         |
+| 模块                   | 说明                                         | 文档                                  |
 | ---------------------- | -------------------------------------------- | ------------------------------------- |
-| App                    | General PowerToys application settings.      | [App module][04]                      |
-| AdvancedPaste          | Advanced clipboard operations.               | [AdvancedPaste module][05]            |
-| AlwaysOnTop            | Pin windows to stay on top.                  | [AlwaysOnTop module][06]              |
-| Awake                  | Keep computer awake.                         | [Awake module][07]                    |
-| ColorPicker            | System-wide color picker utility.            | [ColorPicker module][08]              |
-| CropAndLock            | Crop and lock portions of windows.           | [CropAndLock module][09]              |
-| EnvironmentVariables   | Manage environment variables.                | [EnvironmentVariables module][10]     |
-| FancyZones             | Window layout manager.                       | [FancyZones module][11]               |
-| FileLocksmith          | Identify what's locking files.               | [FileLocksmith module][12]            |
-| FindMyMouse            | Locate your mouse cursor.                    | [FindMyMouse module][13]              |
-| Hosts                  | Quick hosts file editor.                     | [Hosts module][14]                    |
-| ImageResizer           | Resize images from context menu.             | [ImageResizer module][15]             |
-| KeyboardManager        | Remap keys and create shortcuts.             | [KeyboardManager module][16]          |
-| MeasureTool            | Measure pixels on screen.                    | [MeasureTool module][17]              |
-| MouseHighlighter       | Highlight mouse cursor.                      | [MouseHighlighter module][18]         |
-| MouseJump              | Jump across large or multiple displays.      | [MouseJump module][19]                |
-| MousePointerCrosshairs | Display crosshairs centered on mouse.        | [MousePointerCrosshairs module][20]   |
-| Peek                   | Quick file previewer.                        | [Peek module][21]                     |
-| PowerAccent            | Quick accent character selector.             | [PowerAccent module][22]              |
-| PowerOCR               | Extract text from images.                    | [PowerOCR module][23]                 |
-| PowerRename            | Bulk rename files.                           | [PowerRename module][24]              |
-| RegistryPreview        | Visualize and edit registry files.           | [RegistryPreview module][25]          |
-| ShortcutGuide          | Display keyboard shortcuts.                  | [ShortcutGuide module][26]            |
-| Workspaces             | Save and restore application sets.           | [Workspaces module][27]               |
-| ZoomIt                 | Screen zoom and annotation tool.             | [ZoomIt module][28]                   |
+| App                    | PowerToys 应用常规设置。                     | [App module][04]                      |
+| AdvancedPaste          | 高级剪贴板操作。                             | [AdvancedPaste module][05]            |
+| AlwaysOnTop            | 将窗口置顶固定。                             | [AlwaysOnTop module][06]              |
+| Awake                  | 保持电脑唤醒。                               | [Awake module][07]                    |
+| ColorPicker            | 系统级取色器工具。                           | [ColorPicker module][08]              |
+| CropAndLock            | 裁剪并锁定窗口局部区域。                     | [CropAndLock module][09]              |
+| EnvironmentVariables   | 管理环境变量。                               | [EnvironmentVariables module][10]     |
+| FancyZones             | 窗口布局管理器。                             | [FancyZones module][11]               |
+| FileLocksmith          | 查明占用文件的进程。                         | [FileLocksmith module][12]            |
+| FindMyMouse            | 快速定位鼠标指针。                           | [FindMyMouse module][13]              |
+| Hosts                  | 快速编辑 hosts 文件。                        | [Hosts module][14]                    |
+| ImageResizer           | 从右键菜单调整图片尺寸。                     | [ImageResizer module][15]             |
+| KeyboardManager        | 重新映射按键并创建快捷键。                   | [KeyboardManager module][16]          |
+| MeasureTool            | 测量屏幕上的像素。                           | [MeasureTool module][17]              |
+| MouseHighlighter       | 高亮显示鼠标操作。                           | [MouseHighlighter module][18]         |
+| MouseJump              | 在大屏或多屏之间快速移动指针。               | [MouseJump module][19]                |
+| MousePointerCrosshairs | 以鼠标为中心显示十字线。                     | [MousePointerCrosshairs module][20]   |
+| Peek                   | 快速文件预览工具。                           | [Peek module][21]                     |
+| PowerAccent            | 快速选择带音符的字符。                       | [PowerAccent module][22]              |
+| PowerOCR               | 从图片中提取文本。                           | [PowerOCR module][23]                 |
+| PowerRename            | 批量重命名文件。                             | [PowerRename module][24]              |
+| RegistryPreview        | 可视化查看和编辑注册表文件。                 | [RegistryPreview module][25]          |
+| ShortcutGuide          | 显示键盘快捷键。                             | [ShortcutGuide module][26]            |
+| Workspaces             | 保存和恢复应用组合。                         | [Workspaces module][27]               |
+| ZoomIt                 | 屏幕缩放与标注工具。                         | [ZoomIt module][28]                   |
 
-## Common operations
+## 常见操作
 
-### List all supported modules
+### 列出所有支持的模块
 
 ```powershell
 PowerToys.DSC.exe modules --resource 'settings'
 ```
 
-### Get current configuration
+### 获取当前配置
 
 ```powershell
 # Get configuration for a specific module.
@@ -160,7 +153,7 @@ PowerToys.DSC.exe get --resource 'settings' --module FancyZones
 PowerToys.DSC.exe export --resource 'settings' --module FancyZones
 ```
 
-### Apply configuration
+### 应用配置
 
 ```powershell
 # Set configuration for a module.
@@ -168,7 +161,7 @@ $input = '{"settings":{...}}'
 PowerToys.DSC.exe set --resource 'settings' --module FancyZones --input $input
 ```
 
-### Validate configuration
+### 校验配置
 
 ```powershell
 # Test if current state matches desired state.
@@ -176,14 +169,14 @@ $input = '{"settings":{...}}'
 PowerToys.DSC.exe test --resource 'settings' --module FancyZones --input $input
 ```
 
-### Generate schema
+### 生成 schema
 
 ```powershell
 # Get JSON schema for a module's settings.
 PowerToys.DSC.exe schema --resource 'settings' --module FancyZones
 ```
 
-### Generate DSC manifest
+### 生成 DSC manifest
 
 ```powershell
 # Generate manifest for a specific module.
@@ -195,20 +188,20 @@ PowerToys.DSC.exe manifest --resource 'settings' --module FancyZones `
 PowerToys.DSC.exe manifest --resource 'settings' --outputDir $outputDir
 ```
 
-## Examples
+## 示例
 
-For complete examples, see:
+完整示例见:
 
-- [Settings Resource Examples][29]
-- Individual module documentation in the [modules][30] folder
+- [Settings 资源示例][29]
+- [modules][30] 文件夹中的各个模块文档
 
-## See also
+## 另请参阅
 
-- [Settings Resource Reference][03]
-- [PowerToys.DSC.exe Command Reference][01]
-- [Module Documentation][30]
-- [Microsoft DSC Documentation][31]
-- [WinGet Configuration Documentation][32]
+- [Settings 资源参考][03]
+- [PowerToys.DSC.exe 命令参考][01]
+- [模块文档][30]
+- [Microsoft DSC 文档][31]
+- [WinGet 配置文档][32]
 
 <!-- Link reference definitions -->
 [01]: ./modules/
