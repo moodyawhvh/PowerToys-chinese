@@ -3,170 +3,172 @@ description: 'Top-level AI contributor guidance for developing PowerToys - a col
 applyTo: '**'
 ---
 
-# PowerToys – AI contributor guide
+> 🌐 本文档由 [microsoft/PowerToys](https://github.com/microsoft/PowerToys) 翻译,英文原版见原项目。
 
-This is the top-level guidance for AI contributions to PowerToys. Keep changes atomic, follow existing patterns, and cite exact paths in PRs.
+# PowerToys – AI 贡献者指南
 
-## Overview
+这是面向 AI 参与 PowerToys 开发的顶层指引。保持变更原子化,遵循既有模式,并在 PR 中给出确切的文件路径。
 
-PowerToys is a set of utilities for power users to tune and streamline their Windows experience.
+## 概览
 
-| Area | Location | Description |
-|------|----------|-------------|
-| Runner | `src/runner/` | Main executable, tray icon, module loader, hotkey management |
-| Settings UI | `src/settings-ui/` | WinUI/WPF configuration app communicating via named pipes |
-| Modules | `src/modules/` | Individual PowerToys utilities (each in its own subfolder) |
-| Common Libraries | `src/common/` | Shared code: logging, IPC, settings, DPI, telemetry, utilities |
-| Build Tools | `tools/build/` | Build scripts and automation |
-| Documentation | `doc/devdocs/` | Developer documentation |
-| Installer | `installer/` | WiX-based installer projects |
+PowerToys 是一套面向高级用户的实用工具集,用于调校和精简 Windows 体验。
 
-For architecture details and module types, see [Architecture Overview](doc/devdocs/core/architecture.md).
+| 领域 | 位置 | 说明 |
+|------|------|------|
+| Runner | `src/runner/` | 主可执行程序、托盘图标、模块加载器、快捷键管理 |
+| 设置界面 | `src/settings-ui/` | 通过命名管道通信的 WinUI/WPF 配置应用 |
+| 模块 | `src/modules/` | 各个 PowerToys 实用工具(各自独立子文件夹) |
+| 公共库 | `src/common/` | 共享代码:日志、IPC、设置、DPI、遥测、工具类 |
+| 构建工具 | `tools/build/` | 构建脚本与自动化 |
+| 文档 | `doc/devdocs/` | 开发者文档 |
+| 安装程序 | `installer/` | 基于 WiX 的安装项目 |
 
-## Conventions
+架构细节与模块类型见[架构总览](doc/devdocs/core/architecture.md)。
 
-For detailed coding conventions, see:
+## 规范
 
-- [Coding Guidelines](doc/devdocs/development/guidelines.md) – Dependencies, testing, PR management
-- [Coding Style](doc/devdocs/development/style.md) – Formatting, C++/C#/XAML style rules
-- [Logging](doc/devdocs/development/logging.md) – C++ spdlog and C# Logger usage
+详细的编码规范见:
 
-### Component-specific instructions
+- [编码指南](doc/devdocs/development/guidelines.md) – 依赖、测试、PR 管理
+- [代码风格](doc/devdocs/development/style.md) – 格式化,C++/C#/XAML 风格规则
+- [日志](doc/devdocs/development/logging.md) – C++ spdlog 与 C# Logger 用法
 
-These instruction files are automatically applied when working in their respective areas:
+### 组件专属说明
 
-- [Runner & Settings UI](.github/instructions/runner-settings-ui.instructions.md) – IPC contracts, schema migrations
-- [Common Libraries](.github/instructions/common-libraries.instructions.md) – ABI stability, shared code guidelines
+在对应区域工作时,以下说明文件会被自动应用:
 
-## Build
+- [Runner 与设置界面](.github/instructions/runner-settings-ui.instructions.md) – IPC 契约、schema 迁移
+- [公共库](.github/instructions/common-libraries.instructions.md) – ABI 稳定性、共享代码准则
 
-### Prerequisites
+## 构建
 
-- Visual Studio 2022 17.4+ or Visual Studio 2026
-- Windows 10 1803+ (April 2018 Update or newer)
-- Initialize submodules once: `git submodule update --init --recursive`
+### 前置条件
 
-### Build commands
+- Visual Studio 2022 17.4+ 或 Visual Studio 2026
+- Windows 10 1803+(2018 年 4 月更新或更高)
+- 初始化一次子模块:`git submodule update --init --recursive`
 
-| Task | Command |
-|------|---------|
-| First build / NuGet restore | `tools\build\build-essentials.cmd` |
-| Build current folder | `tools\build\build.cmd` |
-| Build with options | `build.ps1 -Platform x64 -Configuration Release` |
+### 构建命令
 
-### Build discipline
+| 任务 | 命令 |
+|------|------|
+| 首次构建 / NuGet 还原 | `tools\build\build-essentials.cmd` |
+| 构建当前文件夹 | `tools\build\build.cmd` |
+| 带选项构建 | `build.ps1 -Platform x64 -Configuration Release` |
 
-1. One terminal per operation (build → test). Do not switch or open new ones mid-flow
-2. After making changes, `cd` to the project folder that changed (`.csproj`/`.vcxproj`)
-3. Use scripts to build: `tools/build/build.ps1` or `tools/build/build.cmd`
-4. For first build or missing NuGet packages, run `build-essentials.cmd` first
-5. **Exit code 0 = success; non-zero = failure** – treat this as absolute
-6. On failure, read the errors log: `build.<config>.<platform>.errors.log`
-7. Do not start tests or launch Runner until the build succeeds
+### 构建纪律
 
-### Build logs
+1. 每个操作一个终端(构建 → 测试),中途不要切换或新开终端
+2. 修改完成后,`cd` 到发生变更的项目文件夹(`.csproj`/`.vcxproj`)
+3. 用脚本构建:`tools/build/build.ps1` 或 `tools/build/build.cmd`
+4. 首次构建或缺少 NuGet 包时,先运行 `build-essentials.cmd`
+5. **退出码 0 = 成功;非零 = 失败** – 把这条当铁律
+6. 失败时阅读错误日志:`build.<config>.<platform>.errors.log`
+7. 构建成功之前不要启动测试或运行 Runner
 
-Located next to the solution/project being built:
+### 构建日志
 
-- `build.<configuration>.<platform>.errors.log` – errors only (check this first)
-- `build.<configuration>.<platform>.all.log` – full log
-- `build.<configuration>.<platform>.trace.binlog` – for MSBuild Structured Log Viewer
+位于被构建的解决方案/项目旁边:
 
-For complete details, see [Build Guidelines](tools/build/BUILD-GUIDELINES.md).
+- `build.<configuration>.<platform>.errors.log` – 仅错误(优先查看)
+- `build.<configuration>.<platform>.all.log` – 完整日志
+- `build.<configuration>.<platform>.trace.binlog` – 供 MSBuild Structured Log Viewer 使用
 
-## Tests
+完整细节见[构建指南](tools/build/BUILD-GUIDELINES.md)。
 
-### Test discovery
+## 测试
 
-- Find test projects by product code prefix (e.g., `FancyZones`, `AdvancedPaste`)
-- Look for sibling folders or 1-2 levels up named `<Product>*UnitTests` or `<Product>*UITests`
+### 定位测试
 
-### Running tests
+- 通过产品代码前缀查找测试项目(如 `FancyZones`、`AdvancedPaste`)
+- 在同级目录或上溯 1-2 层寻找名为 `<Product>*UnitTests` 或 `<Product>*UITests` 的文件夹
 
-1. **Build the test project first**, wait for exit code 0
-2. Run via VS Test Explorer (`Ctrl+E, T`) or `vstest.console.exe` with filters
-3. **Avoid `dotnet test`** in this repo – use VS Test Explorer or vstest.console.exe
+### 运行测试
 
-### Test types
+1. **先构建测试项目**,等待退出码 0
+2. 通过 VS 测试资源管理器(`Ctrl+E, T`)或带筛选器的 `vstest.console.exe` 运行
+3. 本仓库中**避免使用 `dotnet test`** – 请用 VS 测试资源管理器或 vstest.console.exe
 
-| Type | Requirements | Setup |
-|------|--------------|-------|
-| Unit Tests | Standard dev environment | None |
-| UI Tests | WinAppDriver v1.2.1, Developer Mode | Install from [WinAppDriver releases](https://github.com/microsoft/WinAppDriver/releases/tag/v1.2.1) |
-| Fuzz Tests | OneFuzz, .NET 10 | See [Fuzzing Tests](doc/devdocs/tools/fuzzingtesting.md) |
+### 测试类型
 
-### Test discipline
+| 类型 | 要求 | 环境准备 |
+|------|------|----------|
+| 单元测试 | 标准开发环境 | 无 |
+| UI 测试 | WinAppDriver v1.2.1、开发者模式 | 从 [WinAppDriver releases](https://github.com/microsoft/WinAppDriver/releases/tag/v1.2.1) 安装 |
+| 模糊测试 | OneFuzz、.NET 10 | 见[模糊测试](doc/devdocs/tools/fuzzingtesting.md) |
 
-1. Add or adjust tests when changing behavior
-2. If tests skipped, state why (e.g., comment-only change, string rename)
-3. New modules handling file I/O or user input **must** implement fuzzing tests
+### 测试纪律
 
-### Special requirements
+1. 行为变更时同步新增或调整测试
+2. 若跳过测试,说明原因(如纯注释改动、字符串重命名)
+3. 涉及文件 I/O 或用户输入的新模块**必须**实现模糊测试
 
-- **Mouse Without Borders**: Requires 2+ physical computers (not VMs)
-- **Multi-monitor utilities**: Test with 2+ monitors, different DPI settings
+### 特殊要求
 
-For UI test setup details, see [UI Tests](doc/devdocs/development/ui-tests.md).
+- **Mouse Without Borders**:需要 2 台以上物理计算机(不能用虚拟机)
+- **多显示器实用工具**:在 2 台以上显示器、不同 DPI 设置下测试
 
-## Boundaries
+UI 测试环境细节见 [UI 测试](doc/devdocs/development/ui-tests.md)。
 
-### Ask for clarification when
+## 边界
 
-- Ambiguous spec after scanning relevant docs
-- Cross-module impact (shared enum/struct) is unclear
-- Security, elevation, or installer changes involved
-- GPO or policy handling modifications needed
+### 以下情况应先寻求澄清
 
-### Areas requiring extra care
+- 扫阅相关文档后规格仍然含糊
+- 跨模块影响(共享枚举/结构体)不明确
+- 涉及安全、提权或安装程序改动
+- 需要修改 GPO 或策略处理逻辑
 
-| Area | Concern | Reference |
-|------|---------|-----------|
-| `src/common/` | ABI breaks | [Common Libraries Instructions](.github/instructions/common-libraries.instructions.md) |
-| `src/runner/`, `src/settings-ui/` | IPC contracts, schema | [Runner & Settings UI Instructions](.github/instructions/runner-settings-ui.instructions.md) |
-| Installer files | Release impact | Careful review required |
-| Elevation/GPO logic | Security | Confirm no regression in policy handling |
+### 需要格外小心的区域
 
-### What not to do
+| 区域 | 顾虑 | 参考文档 |
+|------|------|----------|
+| `src/common/` | ABI 破坏 | [公共库说明](.github/instructions/common-libraries.instructions.md) |
+| `src/runner/`、`src/settings-ui/` | IPC 契约、schema | [Runner 与设置界面说明](.github/instructions/runner-settings-ui.instructions.md) |
+| 安装程序文件 | 发布影响 | 需仔细评审 |
+| 提权/GPO 逻辑 | 安全 | 确认策略处理无回归 |
 
-- Don't merge incomplete features into main (use feature branches)
-- Don't break IPC/JSON contracts without updating both runner and settings-ui
-- Don't add noisy logs in hot paths
-- Don't introduce third-party deps without PM approval and `NOTICE.md` update
+### 禁止事项
 
-## Validation Checklist
+- 不要把未完成的功能合入 main(使用功能分支)
+- 不要在未同步更新 runner 和 settings-ui 的情况下破坏 IPC/JSON 契约
+- 不要在热路径里加刷屏日志
+- 未经 PM 批准且未更新 `NOTICE.md` 前,不要引入第三方依赖
 
-Before finishing, verify:
+## 验证清单
 
-- [ ] Build clean with exit code 0
-- [ ] Tests updated and passing locally
-- [ ] No unintended ABI breaks or schema changes
-- [ ] IPC contracts consistent between runner and settings-ui
-- [ ] New dependencies added to `NOTICE.md`
-- [ ] PR is atomic (one logical change), with issue linked
+收尾前请确认:
 
-## Documentation Index
+- [ ] 构建通过,退出码 0
+- [ ] 测试已更新且本地通过
+- [ ] 无意外的 ABI 破坏或 schema 变更
+- [ ] runner 与 settings-ui 之间 IPC 契约一致
+- [ ] 新依赖已加入 `NOTICE.md`
+- [ ] PR 保持原子性(单一逻辑变更),并关联了 issue
 
-### Core architecture
+## 文档索引
 
-- [Architecture Overview](doc/devdocs/core/architecture.md)
+### 核心架构
+
+- [架构总览](doc/devdocs/core/architecture.md)
 - [Runner](doc/devdocs/core/runner.md)
-- [Settings System](doc/devdocs/core/settings/readme.md)
-- [Module Interface](doc/devdocs/modules/interface.md)
+- [设置系统](doc/devdocs/core/settings/readme.md)
+- [模块接口](doc/devdocs/modules/interface.md)
 
-### Development
+### 开发
 
-- [Coding Guidelines](doc/devdocs/development/guidelines.md)
-- [Coding Style](doc/devdocs/development/style.md)
-- [Logging](doc/devdocs/development/logging.md)
-- [UI Tests](doc/devdocs/development/ui-tests.md)
-- [Fuzzing Tests](doc/devdocs/tools/fuzzingtesting.md)
+- [编码指南](doc/devdocs/development/guidelines.md)
+- [代码风格](doc/devdocs/development/style.md)
+- [日志](doc/devdocs/development/logging.md)
+- [UI 测试](doc/devdocs/development/ui-tests.md)
+- [模糊测试](doc/devdocs/tools/fuzzingtesting.md)
 
-### Build & tools
+### 构建与工具
 
-- [Build Guidelines](tools/build/BUILD-GUIDELINES.md)
-- [Tools Overview](doc/devdocs/tools/readme.md)
+- [构建指南](tools/build/BUILD-GUIDELINES.md)
+- [工具总览](doc/devdocs/tools/readme.md)
 
-### Instructions (auto-applied)
+### 说明文件(自动应用)
 
-- [Runner & Settings UI](.github/instructions/runner-settings-ui.instructions.md)
-- [Common Libraries](.github/instructions/common-libraries.instructions.md)
+- [Runner 与设置界面](.github/instructions/runner-settings-ui.instructions.md)
+- [公共库](.github/instructions/common-libraries.instructions.md)
